@@ -4,12 +4,14 @@ from django.urls import path
 from product.views import (
     CategoryListAPIView, CategoryDetailAPIView,
     ProductListAPIView, ProductDetailAPIView,
-    ReviewListAPIView, ReviewDetailAPIView
+    ReviewListAPIView, ReviewDetailAPIView,
+    ProductReviewListAPIView,
 )
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/products/reviews/', ProductReviewListAPIView.as_view(), name='product-reviews-list'),
     path('api/v1/categories/', CategoryListAPIView.as_view(), name='category-list'),
     path('api/v1/categories/<int:pk>/', CategoryDetailAPIView.as_view(), name='category-detail'),
     path('api/v1/products/', ProductListAPIView.as_view(), name='product-list'),
