@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product, Review
+from .models import Category, Product, Review, Tag
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -31,6 +31,25 @@ class CategorySerializer(serializers.ModelSerializer):
 
     def get_products_count(self, obj):
         return obj.product_set.count()
+
+    class ProductSerializer(serializers.ModelSerializer):
+        tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True, required=False)
+
+        class Meta:
+            model = Product
+            fields = '__all__'
+
+        def validate_tags(self, value):
+            if not Tag.objects.filter(pk__in=value).exists():
+                raise serializers.ValidationError("One or more tags do not exist.")
+            return value
+
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = '__all__'
 
 
 
