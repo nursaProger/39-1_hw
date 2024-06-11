@@ -1,6 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path
+from users.views import UserRegistrationView, UserConfirmationView
 from product.views import (
     CategoryListAPIView, CategoryDetailAPIView,
     ProductListAPIView, ProductDetailAPIView,
@@ -30,4 +31,6 @@ urlpatterns = [
     path('api/v1/reviews/', ReviewListCreateAPIView.as_view(), name='review-list-create'),
     path('api/v1/reviews/<int:pk>/', ReviewRetrieveUpdateDestroyAPIView.as_view(), name='review-detail'),
     path('api/v1/tags/', views.create_tag, name='create-tag'),
+    path('api/v1/users/register/', UserRegistrationView.as_view(), name='user-register'),
+    path('api/v1/users/confirm/', UserConfirmationView.as_view(), name='user-confirm'),
 ]
